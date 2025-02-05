@@ -1,0 +1,142 @@
+Phase 1: Core Infrastructure
+Task 1: Set Up Project Structure
+
+    Create directories (include/, src/, tests/, etc.).
+
+    Set up build system (e.g., CMake).
+
+    Initialize version control (Git).
+
+Task 2: Implement Math Library
+
+    2.1: Vec3 class (3D vectors).
+
+        Arithmetic operations (+, -, *).
+
+        Dot product, cross product, normalization.
+
+    2.2: Ray class (origin + direction).
+
+    2.3: Unit tests for vectors and rays.
+
+Phase 2: Basic Geometry & Intersections
+Task 3: Sphere Implementation
+
+    3.1: Define a Sphere class (center + radius).
+
+    3.2: Implement ray-sphere intersection logic.
+
+    3.3: Test with simple rays (hit/miss cases).
+
+Task 4: Scene Representation
+
+    4.1: Create a Scene class to hold objects.
+
+    4.2: Add support for multiple spheres.
+
+    4.3: Implement a HitRecord struct to store intersection details (point, normal, distance).
+
+Phase 3: Camera & Image Output
+Task 5: Camera Setup
+
+    5.1: Define a Camera class with position and orientation.
+
+    5.2: Generate rays through a virtual viewport (perspective projection).
+
+    5.3: Adjust field-of-view and aspect ratio.
+
+Task 6: Image Rendering
+
+    6.1: Create an Image class to store pixel data.
+
+    6.2: Output to .ppm file format.
+
+    6.3: Render a test image (e.g., gradient or single sphere).
+
+Phase 4: Materials & Shading
+Task 7: Basic Materials
+
+    7.1: Define a Material base class.
+
+    7.2: Implement Lambertian (diffuse) material.
+
+    7.3: Compute simple shading (e.g., color based on surface normal).
+
+Task 8: Lighting
+
+    8.1: Add PointLight class.
+
+    8.2: Calculate diffuse shading with light direction.
+
+    8.3: Add shadow rays (check visibility to light).
+
+Phase 5: Rendering Pipeline
+Task 9: Ray Tracing Loop
+
+    9.1: Cast rays for each pixel.
+
+    9.2: Find closest intersecting object.
+
+    9.3: Apply material shading with lighting.
+
+    9.4: Render a scene with spheres and shadows.
+
+Task 10: Anti-Aliasing
+
+    10.1: Multi-sampling (average multiple rays per pixel).
+
+    10.2: Implement stratified sampling (jittered rays).
+
+Phase 6: Advanced Features
+Task 11: Reflections & Refractions
+
+    11.1: Add Metal material (reflections).
+
+    11.2: Add Dielectric material (refractions, Snell's law).
+
+    11.3: Limit ray recursion depth.
+
+Task 12: Acceleration Structures
+
+    12.1: Implement bounding volume hierarchy (BVH).
+
+    12.2: Optimize ray-object intersection checks.
+
+Task 13: Textures
+
+    13.1: Add Texture base class.
+
+    13.2: Implement solid color and checkerboard textures.
+
+    13.3: Map textures to materials.
+
+Phase 7: Optimization & Polish
+Task 14: Performance
+
+    14.1: Multithreading (split image into tiles).
+
+    14.2: Profile and optimize hot code paths.
+
+Task 15: User Interaction
+
+    15.1: Parse scene descriptions from files (e.g., JSON).
+
+    15.2: Add command-line arguments (resolution, output path).
+
+Optional Stretch Goals
+
+    Depth of Field: Simulate camera aperture.
+
+    Global Illumination: Path tracing with Monte Carlo integration.
+
+    OBJ Model Loading: Render 3D meshes.
+
+    Interactive Preview: Real-time OpenGL preview.
+
+Testing & Debugging Tasks
+
+    Write unit tests for math and geometry.
+
+    Render debug views (e.g., normals as colors).
+
+    Validate edge cases (e.g., rays inside objects).
