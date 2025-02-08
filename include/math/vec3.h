@@ -1,8 +1,10 @@
+#pragma once
+
 class Vec3 {
     public:
-    float x;
-    float y;
-    float z;
+    static float x;
+    static float y;
+    static float z;
 
     Vec3 operator+(const Vec3& term) const;
     Vec3 operator-(const Vec3& term) const;
@@ -16,7 +18,7 @@ class Vec3 {
 
     Vec3 cross(const Vec3& term) const;
     Vec3 normalise() const;
-    Vec3 reflect() const;
+    Vec3 reflect() const; // TODO properly define
 
-    private:
+    Vec3(float a, float b, float c);
 };
