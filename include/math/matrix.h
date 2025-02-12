@@ -28,6 +28,9 @@ class Mat4 {
     Mat4 inverse() const; // return a new inversed version of matrix
     double determinant() const; // return determinant of matrix
 
+    std::array<double, 4> column(int index) const;
+    std::array<double, 4> row(int index) const;
+
     double get(int row, int col) const; // get element of matrix
     void set(int row, int col, double value); // set element of matrix
 
