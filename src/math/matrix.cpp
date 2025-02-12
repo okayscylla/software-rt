@@ -1,7 +1,6 @@
 #include "math/matrix.h"
 #include <array>
 #include <cmath>
-#include <vector>
 
 Mat4 Mat4::operator*(const Mat4& term) const {
     Mat4 product(Mat4::zeros());
