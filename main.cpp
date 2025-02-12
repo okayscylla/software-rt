@@ -1,5 +1,4 @@
 #include "math/vec3.h"
-#include <iostream>
 
 int main() {
     Vec3 a(1.0, 2.0, 3.0);

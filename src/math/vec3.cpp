@@ -61,7 +61,7 @@ Vec3 Vec3::operator/(double scalar) const {
     return Vec3(value_x, value_y, value_z);
 }
 
-Vec3 Vec3::operator+=(const Vec3& term) {
+Vec3& Vec3::operator+=(const Vec3& term) {
     x = x + term.x;
     y = y + term.y;
     z = z + term.z;
@@ -69,7 +69,7 @@ Vec3 Vec3::operator+=(const Vec3& term) {
     return *this;
 }
 
-Vec3 Vec3::operator-=(const Vec3& term) {
+Vec3& Vec3::operator-=(const Vec3& term) {
     x = x - term.x;
     y = y - term.y;
     z = z - term.z;
@@ -77,7 +77,7 @@ Vec3 Vec3::operator-=(const Vec3& term) {
     return *this;
 }
 
-Vec3 Vec3::operator*=(const Vec3& term) {
+Vec3& Vec3::operator*=(const Vec3& term) {
     x = x * term.x;
     y = y * term.y;
     z = z * term.z;
@@ -85,7 +85,7 @@ Vec3 Vec3::operator*=(const Vec3& term) {
     return *this;
 }
 
-Vec3 Vec3::operator/=(const Vec3& term) {
+Vec3& Vec3::operator/=(const Vec3& term) {
     if (std::abs(term.x) > EPSILON) {
         x = (x / term.x);
     } else {
@@ -107,7 +107,7 @@ Vec3 Vec3::operator/=(const Vec3& term) {
     return *this;
 }
 
-Vec3 Vec3::operator+=(double scalar) {
+Vec3& Vec3::operator+=(double scalar) {
     x = x + scalar;
     y = y + scalar;
     z = z + scalar;
@@ -115,7 +115,7 @@ Vec3 Vec3::operator+=(double scalar) {
     return *this;
 }
 
-Vec3 Vec3::operator-=(double scalar) {
+Vec3& Vec3::operator-=(double scalar) {
     x = x - scalar;
     y = y - scalar;
     z = z - scalar;
@@ -123,7 +123,7 @@ Vec3 Vec3::operator-=(double scalar) {
     return *this;
 }
 
-Vec3 Vec3::operator*=(double scalar) {
+Vec3& Vec3::operator*=(double scalar) {
     x = x * scalar;
     y = y * scalar;
     z = z * scalar;
@@ -131,7 +131,7 @@ Vec3 Vec3::operator*=(double scalar) {
     return *this;
 }
 
-Vec3 Vec3::operator/=(double scalar) {
+Vec3& Vec3::operator/=(double scalar) {
     if (std::abs(scalar) > EPSILON) {
         x = (x / scalar);
         y = (y / scalar);
@@ -195,7 +195,7 @@ Vec3 Vec3::cross(const Vec3& term) const {
     );
 }
 
-Vec3 Vec3::normalise() {
+Vec3& Vec3::normalise() {
     double squared_length = Vec3::lengthSquared();
 
     if (squared_length > EPSILON*EPSILON) {
