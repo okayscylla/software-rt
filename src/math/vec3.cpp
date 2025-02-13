@@ -196,7 +196,7 @@ Vec3 Vec3::cross(const Vec3& term) const {
 }
 
 Vec3& Vec3::normalise() {
-    double squared_length = Vec3::lengthSquared();
+    double squared_length = lengthSquared();
 
     if (squared_length > EPSILON*EPSILON) {
         double magnitude = std::sqrt(squared_length);
@@ -214,10 +214,10 @@ Vec3& Vec3::normalise() {
 } 
 
 Vec3 Vec3::normalised() const {
-    double squared_length = Vec3::lengthSquared();
+    double squared_length = lengthSquared();
 
     if (squared_length > EPSILON*EPSILON) {
-        double magnitude = Vec3::length();
+        double magnitude = length();
 
         return Vec3(
             x / magnitude,
