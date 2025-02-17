@@ -59,7 +59,7 @@ Mat4& Mat4::clear() {
 }
 
 Mat4& Mat4::setDefault() {
-    data = defaultMatrix();
+    data = identity();
 
     return *this;
 }
@@ -183,6 +183,14 @@ Mat4& Mat4::perspective(double fov, double aspect, double nearValue, double farV
     return *this;
 }
 
+Mat4 Mat4::inverse() const {
+
+}
+
+double Mat4::determinant() const {
+
+}
+
 std::array<double, 4> Mat4::column(int index) const {
     return std::array<double, 4>({get(0, index), get(1, index), 
         get(2, index), get(3, index)});
@@ -201,6 +209,18 @@ void Mat4::set(int row, int col, double value) {
     data[col * 4 + row] = value;
 }
 
+Vec3 Mat4::transformPoint(const Vec3& point) const {
+
+}
+
+Vec3 Mat4::transformDirection(const Vec3& direction) const {
+
+}
+
+Vec3 Mat4::transformNormal(const Vec3& normal) const {
+
+}
+
 static std::array<double, 16> zeros() {
     std::array<double, 16> output;
     output.fill(0);
@@ -208,24 +228,13 @@ static std::array<double, 16> zeros() {
     return output;
 }
 
-static std::array<double, 16> identity(std::array<double, 16> output) {    
+static std::array<double, 16> identity() {    
+    std::array<double, 16> output = zeros();
+    
     output[0] = 1;
     output[5] = 1;
     output[10] = 1;
     output[15] = 1;
 
     return output;
-}
-
-static std::array<double, 16> ensureIdentity(std::array<double, 16> matrixArray) {
-    if ((matrixArray[0] == 1) && (matrixArray[5] == 1) && (matrixArray[10] == 1) &&
-        (matrixArray[15] == 1)) {
-            return matrixArray;
-    }
-
-    return identity(matrixArray);
-}
-
-static std::array<double, 16> defaultMatrix() {
-    return identity(zeros());
 }

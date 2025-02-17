@@ -1,7 +1,6 @@
 #pragma once
 #include "math/vec3.h"
 #include <array>
-#include <functional>
 
 class Mat4 {
     public:
@@ -35,17 +34,15 @@ class Mat4 {
     double get(int row, int col) const; // get element of matrix
     void set(int row, int col, double value); // set element of matrix
 
-    Mat4() : data(Mat4::defaultMatrix()) {}; // default constructor
-    Mat4(std::array<double, 16> values) : data(Mat4::ensureIdentity(values)) {}; // create matrix using custom array
+    Mat4() : data(Mat4::identity()) {}; // default constructor
+    Mat4(std::array<double, 16> values) : data(values) {}; // create matrix using custom array
 
-    Vec3 transformPoint(const Vec3&) const; // returns a transformed point
+    Vec3 transformPoint(const Vec3& point) const; // returns a transformed point
     Vec3 transformDirection(const Vec3&) const; // returns a transformed direction
     Vec3 transformNormal(const Vec3&) const; // returns a transformed normal
 
     private:
     std::array<double, 16> data; // internal array, column major
     static std::array<double, 16> zeros(); // matrix of only zeros
-    static std::array<double, 16> identity(std::array<double, 16> output); // identity matrix
-    static std::array<double, 16> ensureIdentity(std::array<double, 16>);
-    static std::array<double, 16> defaultMatrix();
+    static std::array<double, 16> identity(); // identity matrix
 };
