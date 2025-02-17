@@ -65,7 +65,6 @@ Mat4& Mat4::setDefault() {
 }
 
 Mat4& Mat4::transpose() {
-
     for (int row = 0; row < 4; row++) {
         for (int col = 0; col < (row + 1); col++) {
             double swapValue = get(row, col);
@@ -150,20 +149,26 @@ Mat4& Mat4::lookAt(const Vec3& eye, const Vec3& target, const Vec3& up) {
     Vec3 cameraUp = forward.cross(right).normalise();
 
     set(0, 0, right.x);
-    set(0, 1, right.y);
-    set(0, 2, right.z);
+    set(1, 0, right.y);
+    set(2, 0, right.z);
     
-    set(1, 0, cameraUp.x);
+    set(0, 1, cameraUp.x);
     set(1, 1, cameraUp.y);
-    set(1, 2, cameraUp.z);
+    set(2, 1, cameraUp.z);
     
-    set(2, 0, forward.x);
-    set(2, 1, forward.y);
+    set(0, 2, forward.x);
+    set(1, 2, forward.y);
     set(2, 2, forward.z);
 
     set(0, 3, -right.dot(eye));
     set(1, 3, -cameraUp.dot(eye));
     set(2, 3, -forward.dot(eye));
+
+    set(3, 0, 0);
+    set(3, 1, 0);
+    set(3, 2, 0);
+
+    set(3, 3, 1);
 
     return *this;
 }
@@ -184,11 +189,11 @@ Mat4& Mat4::perspective(double fov, double aspect, double nearValue, double farV
 }
 
 Mat4 Mat4::inverse() const {
-
+    return Mat4();
 }
 
 double Mat4::determinant() const {
-
+    return 0;
 }
 
 std::array<double, 4> Mat4::column(int index) const {
@@ -210,15 +215,68 @@ void Mat4::set(int row, int col, double value) {
 }
 
 Vec3 Mat4::transformPoint(const Vec3& point) const {
+    double X = (
+        (get(0, 0) * point.x) +
+        (get(0, 1) * point.y) +
+        (get(0, 2) * point.z) +
+        get(0, 3)
+    );
+    
+    double Y = (
+        (get(1, 0) * point.x) +
+        (get(1, 1) * point.y) +
+        (get(1, 2) * point.z) +
+        get(1, 3)
+    );
 
+    double Z = (
+        (get(2, 0) * point.x) +
+        (get(2, 1) * point.y) +
+        (get(2, 2) * point.z) +
+        get(2, 3)
+    );
+
+    double W = (
+        (get(3, 0) * point.x) +
+        (get(3, 1) * point.y) +
+        (get(3, 2) * point.z) +
+        get(3, 3)
+    );
+
+
+    if (get(3, 2) != 0) {
+        return Vec3(X / W, Y / W, Z / W);
+    } else {
+        return Vec3(X, Y, Z);
+    }
 }
 
 Vec3 Mat4::transformDirection(const Vec3& direction) const {
+    double X = (
+        (get(0, 0) * direction.x) +
+        (get(0, 1) * direction.y) +
+        (get(0, 2) * direction.z)
+    );
+    
+    double Y = (
+        (get(1, 0) * direction.x) +
+        (get(1, 1) * direction.y) +
+        (get(1, 2) * direction.z)
+    );
 
+    double Z = (
+        (get(2, 0) * direction.x) +
+        (get(2, 1) * direction.y) +
+        (get(2, 2) * direction.z)
+    );
+
+    return Vec3(X, Y, Z);
 }
 
 Vec3 Mat4::transformNormal(const Vec3& normal) const {
+    double X, Y, Z;
 
+    return Vec3();
 }
 
 static std::array<double, 16> zeros() {
