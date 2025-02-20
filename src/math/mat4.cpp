@@ -1,7 +1,9 @@
-#include "math/matrix.h"
+#include "math/mat4.h"
 #include "math/vec3.h"
 #include <array>
 #include <cmath>
+#include <iostream>
+#include <ostream>
 
 Mat4 Mat4::operator*(const Mat4& term) const {
     Mat4 product(Mat4::zeros());
@@ -52,13 +54,13 @@ bool Mat4::operator!=(const Mat4& term) const {
     return !operator==(term);
 }
 
-Mat4& Mat4::clear() {
+Mat4& Mat4::setZero() {
     data = zeros();
 
     return *this;
 }
 
-Mat4& Mat4::setDefault() {
+Mat4& Mat4::setIdentity() {
     data = identity();
 
     return *this;
@@ -193,7 +195,7 @@ Mat4 Mat4::inverse() const {
 }
 
 double Mat4::determinant() const {
-    return 0;
+    return Mat4::determinant3();
 }
 
 std::array<double, 4> Mat4::column(int index) const {
@@ -279,14 +281,26 @@ Vec3 Mat4::transformNormal(const Vec3& normal) const {
     return Vec3();
 }
 
-static std::array<double, 16> zeros() {
+double Mat4::determinant3() const {
+    return (
+        get(0, 0) * (get(1, 1) * get(2, 2) - get(1, 2) * get(2, 1)) -
+        get(0, 1) * (get(1, 0) * get(2, 2) - get(1, 2) * get(2, 0)) +
+        get(0, 2) * (get(1, 0) * get(2, 1) - get(1, 1) * get(2, 0))
+    );
+}
+
+double Mat4::determinant4() const {
+    return 0;
+}
+
+std::array<double, 16> Mat4::zeros() { // FIXME: this is not defining the static definition in the header file
     std::array<double, 16> output;
     output.fill(0);
 
     return output;
 }
 
-static std::array<double, 16> identity() {    
+std::array<double, 16> Mat4::identity() { // FIXME: same issues as Mat4::zeros
     std::array<double, 16> output = zeros();
     
     output[0] = 1;

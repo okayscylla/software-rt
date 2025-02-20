@@ -1,8 +1,10 @@
-#include "math/vec3.h"
+#include "math/mat4.h"
+
+// TODO: get rid of whatever nonsense is happening here lol
 
 int main() {
-    Vec3 a(1.0, 2.0, 3.0);
-    Vec3 b(4.0, 5.0, 6.0);
+    Mat4 matrix;
 
+    matrix.determinant();
     return 0;
 }

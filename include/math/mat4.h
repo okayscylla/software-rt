@@ -9,8 +9,8 @@ class Mat4 {
     bool operator==(const Mat4& term) const; // check equality
     bool operator!=(const Mat4& term) const; // check inequality
 
-    Mat4& clear(); // reset to zeros
-    Mat4& setDefault(); // reset to identity matrix
+    Mat4& setZero(); // reset to zeros
+    Mat4& setIdentity(); // reset to identity matrix
     Mat4& transpose(); // transpose matrix
     Mat4 transposed() const; // return new transposed version of current matrix
     
@@ -43,6 +43,8 @@ class Mat4 {
 
     private:
     std::array<double, 16> data; // internal array, column major
+    double determinant3() const;
+    double determinant4() const;
     static std::array<double, 16> zeros(); // matrix of only zeros
     static std::array<double, 16> identity(); // identity matrix
 };
