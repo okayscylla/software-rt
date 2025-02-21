@@ -2,8 +2,6 @@
 #include "math/vec3.h"
 #include <array>
 #include <cmath>
-#include <iostream>
-#include <ostream>
 
 Mat4 Mat4::operator*(const Mat4& term) const {
     Mat4 product(Mat4::zeros());
