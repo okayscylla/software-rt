@@ -90,18 +90,18 @@ Mat4 Mat4::transposed() const {
 
 Mat4& Mat4::translate(double tx, double ty, double tz) {
     Mat4 translationMatrix;
+    translationMatrix.setIdentity();
 
     translationMatrix.set(0, 3, tx);
     translationMatrix.set(1, 3, ty);
     translationMatrix.set(2, 3, tz);
-
-
 
     return operator*=( translationMatrix);
 }
 
 Mat4& Mat4::rotateX(double theta) {
     Mat4 rotationMatrix;
+    rotationMatrix.setIdentity();
 
     rotationMatrix.set(1, 1, cos(theta));
     rotationMatrix.set(1, 2, -sin(theta));
@@ -113,6 +113,7 @@ Mat4& Mat4::rotateX(double theta) {
 
 Mat4& Mat4::rotateY(double theta) {
     Mat4 rotationMatrix;
+    rotationMatrix.setIdentity();
 
     rotationMatrix.set(0, 0, cos(theta));
     rotationMatrix.set(0, 2, sin(theta));
@@ -124,6 +125,7 @@ Mat4& Mat4::rotateY(double theta) {
 
 Mat4& Mat4::rotateZ(double theta) {
     Mat4 rotationMatrix;
+    rotationMatrix.setIdentity();
 
     rotationMatrix.set(0, 0, cos(theta));
     rotationMatrix.set(0, 1, -sin(theta));
@@ -135,6 +137,7 @@ Mat4& Mat4::rotateZ(double theta) {
 
 Mat4& Mat4::scale(double sx, double sy, double sz) {
     Mat4 scaleMatrix;
+    scaleMatrix.setIdentity();
 
     scaleMatrix.set(0, 0, sx);
     scaleMatrix.set(1, 1, sy);
@@ -189,11 +192,19 @@ Mat4& Mat4::perspective(double fov, double aspect, double nearValue, double farV
 }
 
 Mat4 Mat4::inverse() const {
-    return Mat4();
+    if (get(3,3) == 1) { // affine matrix
+        return inverse3();
+    } else {
+        return inverse4();
+    }
 }
 
 double Mat4::determinant() const {
-    return Mat4::determinant3();
+    if (get(3,3) == 1) { // affine matrix
+        return determinant3();
+    } else {
+        return determinant4();
+    }
 }
 
 std::array<double, 4> Mat4::column(int index) const {
@@ -279,6 +290,21 @@ Vec3 Mat4::transformNormal(const Vec3& normal) const {
     return Vec3();
 }
 
+std::array<double, 9> transpose3(std::array<double, 9> matrix) {
+
+}
+
+std::array<double, 9> divide3(std::array<double, 9>) {
+
+}
+
+double Mat4::determinant2(const std::array<double, 4> matrix) {
+    return (
+        matrix[0] * matrix[3] -
+        matrix[1] * matrix[2]
+    );
+}
+
 double Mat4::determinant3() const {
     return (
         get(0, 0) * (get(1, 1) * get(2, 2) - get(1, 2) * get(2, 1)) -
@@ -288,17 +314,58 @@ double Mat4::determinant3() const {
 }
 
 double Mat4::determinant4() const {
-    return 0;
+    for (int col = 0; col < 4; col++) {
+
+    }
 }
 
-std::array<double, 16> Mat4::zeros() { // FIXME: this is not defining the static definition in the header file
+Mat4 Mat4::inverse3() const {
+    double det = determinant();
+
+    if (det == 0) { // not invertible
+        return *this; // keep unmodified
+    }
+
+    std::array<double, 9> cofactor;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            std::array<double, 4> minor = createMinor2(i, j);
+            int sign = (-1) ^ (i + j);
+            cofactor[j * 3 + i] = sign * determinant2(minor);
+        }
+    }
+
+    std::array<double, 9> ajugate;
+}
+
+Mat4 Mat4::inverse4() const {
+    
+}
+
+std::array<double, 9> Mat4::extract3() const {
+    return std::array<double, 9> {
+        data[0], data[1], data[2],
+        data[4], data[5], data[6],
+        data[8], data[9], data[10]
+    };
+}
+
+std::array<double, 4> Mat4::createMinor2(int row, int col) const {
+
+}
+
+std::array<double, 9> Mat4::createMinor3(int row, int col) const {
+
+}
+
+std::array<double, 16> Mat4::zeros() {
     std::array<double, 16> output;
     output.fill(0);
 
     return output;
 }
 
-std::array<double, 16> Mat4::identity() { // FIXME: same issues as Mat4::zeros
+std::array<double, 16> Mat4::identity() {
     std::array<double, 16> output = zeros();
     
     output[0] = 1;

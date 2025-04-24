@@ -35,7 +35,7 @@ class Mat4 {
     void set(int row, int col, double value); // set element of matrix
 
     Mat4() : data(Mat4::identity()) {}; // default constructor
-    Mat4(std::array<double, 16> values) : data(values) {}; // create matrix using custom array
+    Mat4(const std::array<double, 16> values) : data(values) {}; // create matrix using custom array
 
     Vec3 transformPoint(const Vec3& point) const; // returns a transformed point
     Vec3 transformDirection(const Vec3&) const; // returns a transformed direction
@@ -43,8 +43,23 @@ class Mat4 {
 
     private:
     std::array<double, 16> data; // internal array, column major
-    double determinant3() const;
-    double determinant4() const;
+    
+    std::array<double, 9> transpose3(); // 3x3 transpose
+    std::array<double, 9> divide3(); // 3x3 matrix divide
+
+    static double determinant2(const std::array<double, 4> matrix); // 2x2 determinant
+
+    double determinant3() const; // 3x3 determinant
+    double determinant4() const; // 4x4 determinant
+
+    Mat4 inverse3() const; // 3x3 inverse
+    Mat4 inverse4() const; // 4x4 inverse
+
+    std::array<double, 9> extract3() const;  // returns a upper left 3x3 flatten array of Mat4
+
+    std::array<double, 4> createMinor2(int row, int col) const; // creates and returns a minor matrix
+    std::array<double, 9> createMinor3(int row, int col) const; // creates and returns a minor matrix
+
     static std::array<double, 16> zeros(); // matrix of only zeros
     static std::array<double, 16> identity(); // identity matrix
 };
